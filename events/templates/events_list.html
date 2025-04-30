@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block title %}Liste des événements{% endblock %}
+{% block content %}
+<h2>Liste des événements</h2>
+{% if user.is_authenticated %}
+  <p class="logout"><a href="{% url 'logout' %}">Déconnexion</a></p>
+{% endif %}
+{% for event in events %}
+  <div class="event-item">
+    <strong><a href="{% url 'event_detail' event.id %}">{{ event.title }}</a></strong><br>
+    Date : {{ event.date|date:"d/m/Y H:i" }}<br>
+    Participants : {{ event.participation_set.count }}
+  </div>
+{% endfor %}
+{% endblock %}

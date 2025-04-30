@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block title %}Détail de l'événement{% endblock %}
+{% block content %}
+<h2>{{ event.title }}</h2>
+<p><strong>Description :</strong><br> {{ event.description }}</p>
+<p><strong>Date :</strong> {{ event.date|date:"d/m/Y H:i" }}</p>
+<p><strong>Nombre de participants :</strong> {{ participants_count }}</p>
+
+{% if user.is_authenticated %}
+  <form method="post">{% csrf_token %}
+    {% if is_participating %}
+      <button type="submit" name="cancel">Annuler ma participation</button>
+    {% else %}
+      <button type="submit" name="confirm">Je participe</button>
+    {% endif %}
+  </form>
+  <p><a href="{% url 'logout' %}">Déconnexion</a></p>
+{% else %}
+  <p><a href="/">Connectez-vous</a> pour participer.</p>
+{% endif %}
+{% endblock %}
